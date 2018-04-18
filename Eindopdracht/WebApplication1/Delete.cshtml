@@ -1,0 +1,76 @@
+﻿@{
+    var naam = "";
+    var kado = "";
+    var kadoId = "";
+
+    if (!IsPost)
+    {
+        if (!Request.QueryString["ID"].IsEmpty() && Request.QueryString["ID"].IsInt())
+        {
+            kadoId = Request.QueryString["ID"];
+            /* Opent connectie met Database */
+            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Basedata.mdf;Integrated Security=True";
+            string provider = "System.Data.SqlClient";
+            Database db = Database.OpenConnectionString(connectionString, provider);
+            var dbCommand = "SELECT * FROM Kado WHERE ID = @0";
+            var row = db.QuerySingle(dbCommand, kadoId);
+            if (row != null)
+            {
+                naam = row.Naam;
+                kado = row.Kado;
+            }
+            else
+            {
+                Validation.AddFormError("No kado was found for that ID.");
+            }
+        }
+        else
+        {
+            Validation.AddFormError("No kado was found for that ID.");
+        }
+    }
+
+    if (IsPost && !Request["buttonDelete"].IsEmpty())
+    {
+        kadoId = Request.Form["kadoId"];
+        /* Opent connectie met Database */
+        string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Basedata.mdf;Integrated Security=True";
+        string provider = "System.Data.SqlClient";
+        Database db = Database.OpenConnectionString(connectionString, provider);
+        var Delete = "DELETE FROM Kado WHERE ID = @0";
+        db.Execute(Delete, kadoId);
+        Response.Redirect("~/wishlist");
+    }
+}
+<html>
+<head>
+	<title>Verwijder een Cadeau</title>
+</head>
+<body>
+	<!-- Render Navbar -->
+	@RenderPage("~/Shared/_Navbar.cshtml")
+	<h1>Verwijder een Kado</h1>
+	@Html.ValidationSummary()
+
+	<form method="post">
+		<fieldset>
+			<legend>Kado Informatie</legend>
+
+			<p>
+				<span>Naam:</span>
+				<span>@naam</span>
+			</p>
+
+			<p>
+				<span>Kado:</span>
+				<span>@kado</span>
+			</p>
+
+			<input type="hidden" name="cadeauID" value="@kadoId" />
+			<p><input type="submit" name="buttonDelete" value="Verwijder kado" /></p>
+		</fieldset>
+		<p><a href="~/wishlist">Ga terug naar de Kadolijst</a></p>
+	</form>
+
+</body>
+</html>

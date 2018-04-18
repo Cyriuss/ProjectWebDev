@@ -1,0 +1,244 @@
+﻿@using WebMatrix.Data;
+@{
+    /* Opent connectie met Database */
+    string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Basedata.mdf;Integrated Security=True";
+    string provider = "System.Data.SqlClient";
+    Database db = Database.OpenConnectionString(connectionString, provider);
+
+    bool bericht1 = false;
+    bool bericht2 = false;
+    bool bericht3 = false;
+    bool bericht4 = false;
+    bool bericht5 = false;
+    bool bericht6 = false;
+    bool bericht7 = false;
+    bool bericht8 = false;
+    bool bericht9 = false;
+
+    var email = Request.Form["email"];
+    var username = Request.Form["username"];
+    var password = Request.Form["password"];
+    var password1 = Request.Form["password1"];
+
+    if (IsPost)
+    {
+        #region registerberichten
+        if (email == "" && username == "" && password == "" && password1 == "")
+        {
+            bericht1 = true;
+        }
+        else if (email == "" && username == "" && password == "" && password1 != "")
+        {
+            bericht1 = true;
+        }
+        else if (email == "" && username == "" && password != "" && password1 == "")
+        {
+            bericht1 = true;
+        }
+        else if (email == "" && username != "" && password == "" && password1 == "")
+        {
+            bericht1 = true;
+        }
+        else if (email != "" && username == "" && password == "" && password1 == "")
+        {
+            bericht1 = true;
+        }
+        else if (email == "" && username == "" && password != "" && password1 != "")
+        {
+            bericht1 = true;
+        }
+        else if (email == "" && username != "" && password == "" && password1 != "")
+        {
+            bericht1 = true;
+        }
+        else if (email != "" && username == "" && password == "" && password1 != "")
+        {
+            bericht1 = true;
+        }
+        else if (email == "" && username != "" && password != "" && password1 == "")
+        {
+            bericht1 = true;
+        }
+        else if (email != "" && username == "" && password != "" && password1 == "")
+        {
+            bericht1 = true;
+        }
+        else if (email != "" && username != "" && password == "" && password1 == "")
+        {
+            bericht1 = true;
+        }
+        else if (email == "" && username != "" && password != "" && password1 != "")
+        {
+            bericht2 = true;
+        }
+        else if (email != "" && username == "" && password != "" && password1 != "")
+        {
+            bericht3 = true;
+        }
+        else if (email != "" && username != "" && password == "" && password1 != "")
+        {
+            bericht4 = true;
+        }
+        else if (email != "" && username != "" && password != "" && password1 == "")
+        {
+            bericht5 = true;
+        }
+        if (email != "" && username != "" && password != "" && password1 != "")
+        {
+            string sel = "SELECT username FROM [user] WHERE username = @0";
+            var result = db.Query(sel, username);
+            if (result.Count() > 0 && username != "" && password != "")
+            {
+                bericht7 = true;
+            }
+            else if (password != password1)
+            {
+                bericht8 = true;
+            }
+            else
+            {
+                string ins = "INSERT INTO [user] (email, username, password) VALUES(@0,@1,@2)";
+                db.Execute(ins, email, username, password);
+                bericht9 = true;
+                Response.Redirect("~/login.cshtml");
+            }
+        }
+        #endregion
+    }
+}
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <title>Hebberige Bruiden - Signup</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="register.css" type="text/css">
+    </head>
+    <body>
+        <!-- Render Navbar -->
+        @RenderPage("~/Shared/_Navbar.cshtml")
+        <!-- Start RegisterForm -->
+        <div class="container">
+            <form class="form-horizontal" role="form" method="POST" action="/register">
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-6">
+                        <h2>Register New User</h2>
+                        <hr>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 field-label-responsive">
+                        <label for="name">Name</label>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                <div class="input-group-addon" style="width: 4rem"><i class="fa fa-user"></i></div>
+                                <input type="text" name="username" class="form-control" id="username" value="@Request.Form["username"]" placeholder="John Smith" required autofocus>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-control-feedback">
+                            <span class="text-danger align-middle">
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 field-label-responsive">
+                        <label for="email">Email Address</label>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                <div class="input-group-addon" style="width: 4rem"><i class="fa fa-at"></i></div>
+                                <input type="email" name="email" class="form-control" id="email" value="@Request.Form["email"]" placeholder="a@b.c" required autofocus>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-control-feedback">
+                            <span class="text-danger align-middle">
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 field-label-responsive">
+                        <label for="password">Password</label>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group has-danger">
+                            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                <div class="input-group-addon" style="width: 4rem"><i class="fa fa-key"></i></div>
+                                <input type="password" name="password" class="form-control" id="password" value="@Request.Form["password"]" placeholder="Password" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 field-label-responsive">
+                        <label for="password1">Confirm password</label>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group has-danger">
+                            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                <div class="input-group-addon" style="width: 4rem"><i class="fa fa-key"></i></div>
+                                <input type="password" name="password1" class="form-control" id="password1" value="@Request.Form["password"]"
+                                       placeholder="Confirm password" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @if (bericht1 == true)
+                {
+                    <h3>Meerdere inloggegevens zijn incorrect ingevoerd.</h3>
+                }
+                @if (bericht2 == true)
+                {
+                    <h3>email is empty.</h3>
+                }
+                @if (bericht3 == true)
+                {
+                    <h3>Username is empty.</h3>
+                }
+                @if (bericht4 == true)
+                {
+                    <h3>Password is empty.</h3>
+                }
+                @if (bericht5 == true)
+                {
+                    <h3>Confirm Password is empty.</h3>
+                }
+                @if (bericht6 == true)
+                {
+                    <h3>All fields are empty!</h3>
+                }
+                @if (bericht7 == true)
+                {
+                    <h3>Username is already taken.</h3>
+                }
+                @if (bericht8 == true)
+                {
+                    <h3>Passwords do not match.</h3>
+                }
+                @if (bericht9 == true)
+                {
+                    <h4>Succesfully registered!</h4>
+                }
+                <div class="row">
+                    <div class="col-md-5"></div>
+                    <div class="col-md-6">
+                        <button type="submit" class="btn btn-success"><i class="fa fa-user-plus"></i> Register</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- End RegisterForm -->
+        <!-- Render Footer-->
+        @RenderPage("~/Shared/_Footer.cshtml")
+    </body>
+</html>

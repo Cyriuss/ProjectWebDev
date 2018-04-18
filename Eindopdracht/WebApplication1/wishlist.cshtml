@@ -1,0 +1,119 @@
+﻿@using WebMatrix.Data;
+@{
+    //checkt of je al ingelogd bent
+    if (Session["id"] == null)
+    {
+        Response.Redirect("~/register.cshtml");
+    }
+
+    /* Opent connectie met Database */
+    string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Basedata.mdf;Integrated Security=True";
+    string provider = "System.Data.SqlClient";
+    Database db = Database.OpenConnectionString(connectionString, provider);
+    var selectedData = db.Query("SELECT * FROM Kado");
+    var grid = new WebGrid(source: selectedData);
+
+    /*if(!Request.QueryString[E])*/
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Hebberige Bruiden - Wishlist</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="navbar.css">
+	<style type="text/css">
+		.grid {
+			margin: 4px;
+			border-collapse: collapse;
+			width: 600px;
+		}
+
+			.grid th, .grid td {
+				border: 1px solid #C0C0C0;
+				padding: 5px;
+			}
+
+		.head {
+			background-color: #E8E8E8;
+			font-weight: bold;
+			color: #FFF;
+		}
+
+		.alt {
+			background-color: #E8E8E8;
+			color: #000;
+		}
+	</style>
+</head>
+<body>
+	<!-- Render Navbar -->
+	@RenderPage("~/Shared/_Navbar.cshtml")
+	<!-- Start Carousel -->
+	<div id="demo" class="carousel slide" data-ride="carousel">
+
+		<!-- Indicators -->
+		<ul class="carousel-indicators">
+			<li data-target="#demo" data-slide-to="0" class="active"></li>
+			<li data-target="#demo" data-slide-to="1"></li>
+			<li data-target="#demo" data-slide-to="2"></li>
+		</ul>
+
+		<!-- The slideshow -->
+		<div class="carousel-inner">
+			<div class="carousel-item active">
+				<img class="d-block img-fluid mx-auto" src="https://images.pexels.com/photos/540522/pexels-photo-540522.jpeg?w=940&h=650&auto=compress&cs=tinysrgb" alt="Wedding1" style="width:1600px;height:900px">
+				<div class="carousel-caption d-none d-md-block">
+					<h3>Wishlists voor Bruiloften</h3>
+					<p>Weet jij al wat je gaat doen voor je bruiloft?</p>
+				</div>
+			</div>
+			<div class="carousel-item">
+				<img class="d-block img-fluid mx-auto" src="https://www.reverent.tv/wp-content/uploads/2014/05/SS-Wedding-Stock-007.jpg" alt="Wedding2" style="width:1600px;height:900px">
+				<div class="carousel-caption d-none d-md-block">
+					<h3>Wishlists voor Bruiloften</h3>
+					<p>Weet jij al wat je gaat doen voor je bruiloft?</p>
+				</div>
+			</div>
+			<div class="carousel-item">
+				<img class="d-block img-fluid mx-auto" src="https://static.pexels.com/photos/256737/pexels-photo-256737.jpeg" alt="Wedding3" style="width:1600px;height:900px">
+				<div class="carousel-caption d-none d-md-block">
+					<h3>Wishlists voor Bruiloften</h3>
+					<p>Weet jij al wat je gaat doen voor je bruiloft?</p>
+				</div>
+			</div>
+		</div>
+
+		<!-- Left and right controls -->
+		<a class="carousel-control-prev" href="#demo" data-slide="prev">
+			<span class="carousel-control-prev-icon"></span>
+		</a>
+		<a class="carousel-control-next" href="#demo" data-slide="next">
+			<span class="carousel-control-next-icon"></span>
+		</a>
+
+	</div>
+	<!-- End Carousel -->
+	<!-- Start Table -->
+	<div>
+		<div>
+			@grid.GetHtml(
+				 tableStyle: "grid",
+				 headerStyle: "head",
+				 alternatingRowStyle: "alt",
+				 columns: grid.Columns(
+				 grid.Column(format: @<a href="~/Edit?id=@item.id">Pas aan</a>),
+				 grid.Column("Naam"),
+				 grid.Column("Kado"),
+				 grid.Column("Prio"),
+				 grid.Column(format: @<a href="~/Delete?id=@item.id">Verwijder</a>)
+						)
+				)
+		</div>
+		<a href="~/AddKado.cshtml">Add a kado</a>
+	</div>
+	<!-- End Table -->
+	<!-- Render Footer-->
+	@RenderPage("~/Shared/_Footer.cshtml")
+</body>
+</html>

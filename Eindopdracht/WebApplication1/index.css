@@ -1,0 +1,58 @@
+﻿/* - Navbar - */
+@media (min-width: 768px) {
+	.navbar-brand.abs {
+		position: absolute;
+		width: 100%;
+		left: 0;
+		text-align: center;
+	}
+}
+
+/* - Start Carousel - */
+#carousel-inner > .item > img, .carousel-inner > .item > a > img {
+	width: 100%;
+	margin: auto;
+}
+
+/* - Algemeen - */
+h1, h2, h3, p {
+	text-align: center;
+}
+
+.container {
+	width: auto;
+	max-width: 1080px;
+	padding: 0 15px;
+}
+
+.text-muted {
+	color: #6c757d;
+}
+
+/* - Footer - */
+footer {
+	color: white;
+}
+
+footer a {
+	color: #bfffff;
+}
+
+footer a:hover {
+	color: white;
+}
+
+.footer-bottom {
+	background: #3d6277;
+	padding: 2em;
+}
+
+.footer-top {
+	background: #2d4958;
+}
+
+.footer-middle {
+	background: #3d6277;
+	padding-top: 2em;
+	color: white;
+}

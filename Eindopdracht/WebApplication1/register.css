@@ -1,0 +1,23 @@
+﻿/* - Begin Navbar* - */
+@media (min-width: 768px) {
+	.navbar-brand.abs {
+		position: absolute;
+		width: 100%;
+		left: 0;
+		text-align: center;
+	}
+}
+/* - Eind Navbar - */
+
+/* - Algemeen - */
+h1, h2, h3, p {
+	text-align: center;
+}
+
+.mt-3 {
+	margin-top: 0;
+}
+
+.container{
+    padding-top: 50px;
+}

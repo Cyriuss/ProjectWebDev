@@ -1,0 +1,56 @@
+﻿@using WebMatrix.Data;
+@{
+    /* Een error die je krijgt als je er 1 niet invult */
+    Validation.RequireField("Naam", "You have to enter your name.");
+    Validation.RequireField("Kado", "You haven't entered a kado.");
+
+    /* Variabelen */
+    var naam = "";
+    var kado = "";
+
+    if (IsPost && Validation.IsValid())
+    {
+        naam = Request.Form["naam"];
+        kado = Request.Form["kado"];
+
+        /* Opent connectie met Database */
+        string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Basedata.mdf;Integrated Security=True";
+        string provider = "System.Data.SqlClient";
+        Database db = Database.OpenConnectionString(connectionString, provider);
+        /* Nadata hij geconnect is dan add hij values in de kado table */
+        var insertCommand = "INSERT INTO Kado (Naam, Kado) Values(@0, @1)";
+        db.Execute(insertCommand, naam, kado);
+        Response.Redirect("~/wishlist.cshtml");
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Voeg een Kado toe</title>
+</head>
+<body>
+	<!-- Render Navbar -->
+	@RenderPage("~/Shared/_Navbar.cshtml")
+	<h1>Voeg een Kado toe</h1>
+	@Html.ValidationSummary()
+	<form method="post">
+		<fieldset>
+			<legend>Kado Informatie</legend>
+			<p>
+				<label for="naam">Naam:</label>
+				<input type="text" name="naam" value="@Request.Form["naam"]" />
+				@Html.ValidationMessage("naam")
+			</p>
+
+			<p>
+				<label for="Kado">Kado:</label>
+				<input type="text" name="kado" value="@Request.Form["kado"]" />
+				@Html.ValidationMessage("kado")
+			</p>
+
+			<p><input type="submit" name="buttonSubmit" value="Voeg Kado toe" /></p>
+		</fieldset>
+	</form>
+</body>
+</html>

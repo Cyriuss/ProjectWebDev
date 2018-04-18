@@ -1,0 +1,113 @@
+﻿@{
+    var naam = "";
+    var kado = "";
+    var kadoId = "";
+
+    if (!IsPost)
+    {
+        if (!Request.QueryString["ID"].IsEmpty() && Request.QueryString["ID"].IsInt())
+        {
+            kadoId = Request.QueryString["ID"];
+            /* Opent connectie met Database */
+            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Basedata.mdf;Integrated Security=True";
+            string provider = "System.Data.SqlClient";
+            Database db = Database.OpenConnectionString(connectionString, provider);
+            var dbCommand = "SELECT * FROM Kado WHERE ID = @0";
+            var row = db.QuerySingle(dbCommand, kadoId);
+            if (row != null)
+            {
+                naam = row.Naam;
+                kado = row.Kado;
+            }
+            else
+            {
+                Validation.AddFormError("No kado was selected.");
+            }
+        }
+        else
+        {
+            Validation.AddFormError("No kado was selected.");
+        }
+    }
+
+    if (IsPost)
+    {
+        Validation.RequireField("Naam", "Je moet een naam invullen");
+        Validation.RequireField("kado", "Je kan niet doorklikken zonder kado");
+
+        naam = Request.Form["naam"];
+        kado = Request.Form["kado"];
+        kadoId = Request.Form["kadoId"];
+
+        if (Validation.IsValid())
+        {
+            /* Opent connectie met Database */
+            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Basedata.mdf;Integrated Security=True";
+            string provider = "System.Data.SqlClient";
+            Database db = Database.OpenConnectionString(connectionString, provider);
+            var Update = "UPDATE Kado SET naam=@0, kado=@1 WHERE ID = @2";
+            db.Execute(Update, naam, kado, kadoId);
+            Response.Redirect("wishlist");
+        }
+    }
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Pas een Kado aan</title>
+	<style>
+		fieldset.scheduler-border {
+			border: 1px groove #ddd !important;
+			padding: 0 1.4em 1.4em 1.4em !important;
+			margin: 0 0 1.5em 0 !important;
+			-webkit-box-shadow: 0px 0px 0px 0px #000;
+			box-shadow: 0px 0px 0px 0px #000;
+			text-align: center;
+		}
+
+		legend.scheduler-border {
+			font-size: 1.2em !important;
+			font-weight: bold !important;
+			text-align: left !important;
+			width: inherit;
+			padding: 0 10px;
+			border-bottom: none;
+			text-align: center;
+		}
+
+		.textcenter{
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+	<!-- Render Navbar -->
+	@RenderPage("~/Shared/_Navbar.cshtml")
+	<h1>Pas een Kado aan</h1>
+	@Html.ValidationSummary()
+	<form method="post">
+		<fieldset class="scheduler-border">
+			<legend class="scheduler-border">Kado Informatie</legend>
+
+			<p>
+				<label for="naam">Naam:</label>
+				<input type="text" name="naam" value="@naam" />
+			</p>
+
+			<p>
+				<label for="kado">Kado:</label>
+				<input type="text" name="kado" value="@kado" />
+			</p>
+
+			<input type="hidden" name="kadoId" value="@kadoId" />
+
+			<p><input type="submit" name="buttonSubmit" value="Submit Changes" /></p>
+		</fieldset>
+	</form>
+	<p><a class="textcenter" href="~/wishlist.cshtml">Terug naar de Cadeaulijst</a></p>
+</body>
+<!-- Render Footer-->
+@RenderPage("~/Shared/_Footer.cshtml")
+</html>
