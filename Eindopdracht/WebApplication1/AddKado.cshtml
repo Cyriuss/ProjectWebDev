@@ -3,7 +3,7 @@
     /* Een error die je krijgt als je er 1 niet invult */
     Validation.RequireField("Naam", "You have to enter your name.");
     Validation.RequireField("Kado", "You have to enter a kado.");
-    Validation.RequireField("Prio", "You have to enter a prio.");
+    Validation.RequireField("Prio", "You have to enter a priority.");
 
     /* Variabelen */
     var naam = "";
@@ -57,10 +57,10 @@
     <title>Voeg een Kado toe</title>
 </head>
 <body>
-	<!-- Render Navbar -->
-	@RenderPage("~/Shared/_Navbar.cshtml")
-	<h1 class="textcenter" style="margin-top: 40px;">Voeg een Kado toe</h1>
-	@Html.ValidationSummary()
+    <!-- Render Navbar -->
+    @RenderPage("~/Shared/_Navbar.cshtml")
+    <h1 class="textcenter" style="margin-top: 40px;">Voeg een Kado toe</h1>
+    @Html.ValidationSummary()
     <form method="post">
         <fieldset class="scheduler-border">
             <legend align="center" class="scheduler-border" style="text-align: center;">Kado Informatie</legend>
@@ -86,4 +86,6 @@
         </fieldset>
     </form>
 </body>
+<!-- Render Footer-->
+@RenderPage("~/Shared/_Footer.cshtml")
 </html>

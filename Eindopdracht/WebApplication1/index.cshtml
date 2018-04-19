@@ -2,7 +2,7 @@
     //checkt of je al ingelogd bent
     if (Session["id"] == null)
     {
-        Response.Redirect("~/register.cshtml");
+        Response.Redirect("~/login.cshtml");
     }
 }
 <!DOCTYPE html>
@@ -19,9 +19,10 @@
     <!-- Start Jumbotron -->
     <div class="jumbotron">
         <div class="container">
-            <h1 class="display-3">Welkom op de website van Hebberige Bruiden! @Session["username"]</h1>
+            <h1 class="display-3">Welkom @Session["username"], op de website van Hebberige Bruiden!</h1>
             <p>Deze website kan je gebruiken voor je Bruiloft Wishlists!.</p>
             <p>Je kan hier je eigen wish list maken en deze sturen naar de personen van uw keuze, hun kunnen hier naar kijken maar zouden ook eventueel nog wat kunnen toevoegen.</p>
+            <p>Je unieke code is: '@Session["id"]'</p>
         </div>
     </div>
     <!-- End Jumbotron -->

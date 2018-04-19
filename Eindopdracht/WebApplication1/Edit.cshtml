@@ -48,7 +48,7 @@
             Database db = Database.OpenConnectionString(connectionString, provider);
             var Update = "UPDATE Kado SET naam=@0, kado=@1 WHERE ID = @2";
             db.Execute(Update, naam, kado, kadoId);
-            Response.Redirect("wishlist");
+            Response.Redirect("~/wishlist");
         }
     }
 }

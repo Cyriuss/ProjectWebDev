@@ -98,28 +98,34 @@
                     <div class="form-control-feedback">
                         <span class="text-danger align-middle">
                             @if (bericht1 == true)
-                            {
-                                <h3>Wrong password.</h3>
-                            }
+                {
+                    <h3>Wrong password.</h3>
+    }
                             @if (bericht2 == true)
-                            {
-                                <h3>You should probably try to login.</h3>
-                            }
+                {
+                    <h3>You should probably try to login.</h3>
+    }
                             @if (bericht3 == true)
-                            {
-                                <h3>username is empty.</h3>
-                            }
+                {
+                    <h3>username is empty.</h3>
+    }
                             @if (bericht4 == true)
-                            {
-                                <h3>password is empty.</h3>
-                            }
+                {
+                    <h3>password is empty.</h3>
+    }
                         </span>
                     </div>
                 </div>
                 <div class="row" style="padding-top: 1rem">
                     <div class="col-md-3"></div>
-                    <div class="col-md-6" style="padding-left: 77%">
+                    <div class="col-md-6" style="padding-left: 83%">
                         <button type="submit" class="btn btn-success"><i class="fa fa-sign-in"></i> Login</button>
+                    </div>
+                </div>
+                <div class="row" style="padding-top: 1rem">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-12" style="padding-left: 75%">
+                        <p><a href="~/register.cshtml">Nog geen account?</a></p>
                     </div>
                 </div>
             </div>
