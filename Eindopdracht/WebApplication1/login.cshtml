@@ -28,19 +28,19 @@
         }
         if (username != "" && password != "")
         {
-            string sel = "SELECT * FROM [user] WHERE username = @0 AND password = @1";
-            var result = db.QuerySingle(sel, username, password);
-            if (result != null)
+            string select = "SELECT * FROM [user] WHERE username = @0 AND password = @1";
+            var resultaat = db.QuerySingle(select, username, password);
+            if (resultaat != null)
             {
-                Session["id"] = result.Id;
-                Session["username"] = result.username;
+                Session["id"] = resultaat.Id;
+                Session["username"] = resultaat.username;
                 Response.Redirect("~/index.cshtml");
             }
             else if (username != "" && password != "")
             {
-                string sel2 = "SELECT * FROM [user] WHERE username = @0 AND password = @1";
-                var result2 = db.Query(sel2, username, password);
-                if (result2.Count() == 0 && username != "" && password != "")
+                string select2 = "SELECT * FROM [user] WHERE username = @0 AND password = @1";
+                var resultaat2 = db.Query(select2, username, password);
+                if (resultaat2.Count() == 0 && username != "" && password != "")
                 {
                     bericht1 = true;
                 }
@@ -48,7 +48,7 @@
         }
     }
 }
-	
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -77,7 +77,7 @@
                         <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                             <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-user"></i></div>
                             <input type="text" name="username" class="form-control" id="username"
-                                   placeholder="PieBaker69" value="@Request.Form["username"]" required autofocus>
+                                   placeholder="Henk en Ingrid" value="@Request.Form["username"]" required autofocus>
                         </div>
                     </div>
                 </div>
@@ -116,23 +116,11 @@
                         </span>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-3"></div>
-                <div class="col-md-6" style="padding-top: .35rem">
-                    <div class="form-check mb-2 mr-sm-2 mb-sm-0">
-                        <label class="form-check-label">
-                            <input class="form-check-input" name="remember" type="checkbox"/>
-                            <span style="padding-bottom: .15rem">Remember me</span>
-                        </label>
+                <div class="row" style="padding-top: 1rem">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6" style="padding-left: 77%">
+                        <button type="submit" class="btn btn-success"><i class="fa fa-sign-in"></i> Login</button>
                     </div>
-                </div>
-            </div>
-            <div class="row" style="padding-top: 1rem">
-                <div class="col-md-3"></div>
-                <div class="col-md-6">
-                    <button type="submit" class="btn btn-success"><i class="fa fa-sign-in"></i> Login</button>
-                    <a class="btn btn-link" href="/password/reset">Forgot Your password?</a>
                 </div>
             </div>
         </form>
@@ -141,39 +129,3 @@
     @RenderPage("~/Shared/_Footer.cshtml")
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@*var rows = db.Query(username, password);
-    foreach (var row in rows)
-    {
-        if (row.username == username && row.password == password)
-        {
-
-        }
-
-        else
-        {
-
-        }*@

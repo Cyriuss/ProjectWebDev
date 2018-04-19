@@ -7,6 +7,7 @@
     {
         if (!Request.QueryString["ID"].IsEmpty() && Request.QueryString["ID"].IsInt())
         {
+            // Select de gegevens die de bijbehorende kado heeft.
             kadoId = Request.QueryString["ID"];
             /* Opent connectie met Database */
             string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Basedata.mdf;Integrated Security=True";

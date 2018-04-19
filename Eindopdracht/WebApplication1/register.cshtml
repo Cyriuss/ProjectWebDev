@@ -22,7 +22,7 @@
 
     if (IsPost)
     {
-        #region registerberichten
+        #region errormessages
         if (email == "" && username == "" && password == "" && password1 == "")
         {
             bericht1 = true;
@@ -83,27 +83,30 @@
         {
             bericht5 = true;
         }
+        #endregion
+        // Checkt of username al in de database staat.
         if (email != "" && username != "" && password != "" && password1 != "")
         {
-            string sel = "SELECT username FROM [user] WHERE username = @0";
-            var result = db.Query(sel, username);
-            if (result.Count() > 0 && username != "" && password != "")
+            string Select = "SELECT username FROM [user] WHERE username = @0";
+            var Resultaat = db.Query(Select, username);
+            if (Resultaat.Count() > 0 && username != "" && password != "")
             {
                 bericht7 = true;
             }
+            // Checkt of de passwords matchen.
             else if (password != password1)
             {
                 bericht8 = true;
             }
+            // Insert alle gegevens in de database.
             else
             {
-                string ins = "INSERT INTO [user] (email, username, password) VALUES(@0,@1,@2)";
-                db.Execute(ins, email, username, password);
+                string Insert = "INSERT INTO [user] (email, username, password) VALUES(@0,@1,@2)";
+                db.Execute(Insert, email, username, password);
                 bericht9 = true;
                 Response.Redirect("~/login.cshtml");
             }
         }
-        #endregion
     }
 }
 
@@ -136,7 +139,7 @@
                         <div class="form-group">
                             <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                                 <div class="input-group-addon" style="width: 4rem"><i class="fa fa-user"></i></div>
-                                <input type="text" name="username" class="form-control" id="username" value="@Request.Form["username"]" placeholder="John Smith" required autofocus>
+                                <input type="text" name="username" class="form-control" id="username" value="@Request.Form["username"]" placeholder="Henk en Ingrid" required autofocus>
                             </div>
                         </div>
                     </div>
