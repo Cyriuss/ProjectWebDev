@@ -7,7 +7,7 @@
     {
         if (!Request.QueryString["ID"].IsEmpty() && Request.QueryString["ID"].IsInt())
         {
-            kadoId = Request.QueryString["ID"];
+            kadoId = Convert.ToString(Request.QueryString["ID"]);
             /* Opent connectie met Database */
             string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Basedata.mdf;Integrated Security=True";
             string provider = "System.Data.SqlClient";
@@ -32,7 +32,7 @@
 
     if (IsPost && !Request["buttonDelete"].IsEmpty())
     {
-        kadoId = Request.Form["kadoId"];
+        kadoId = Convert.ToString(Request.QueryString["ID"]);
         /* Opent connectie met Database */
         string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Basedata.mdf;Integrated Security=True";
         string provider = "System.Data.SqlClient";
