@@ -7,6 +7,7 @@
     {
         if (!Request.QueryString["ID"].IsEmpty() && Request.QueryString["ID"].IsInt())
         {
+            // Select de gegevens die de bijbehorende kado heeft.
             kadoId = Request.QueryString["ID"];
             /* Opent connectie met Database */
             string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Basedata.mdf;Integrated Security=True";
@@ -85,28 +86,28 @@
 <body>
 	<!-- Render Navbar -->
 	@RenderPage("~/Shared/_Navbar.cshtml")
-	<h1>Pas een Kado aan</h1>
+	<h1 class="textcenter" style="margin-top: 40px;">Pas een Kado aan</h1>
 	@Html.ValidationSummary()
 	<form method="post">
-		<fieldset class="scheduler-border">
-			<legend class="scheduler-border">Kado Informatie</legend>
+        <fieldset class="scheduler-border">
+            <legend align="center" class="scheduler-border" style="text-align: center;">Kado Informatie</legend>
 
-			<p>
-				<label for="naam">Naam:</label>
-				<input type="text" name="naam" value="@naam" />
-			</p>
+            <p>
+                <label for="naam">Naam:</label>
+                <input type="text" name="naam" value="@naam" />
+            </p>
 
-			<p>
-				<label for="kado">Kado:</label>
-				<input type="text" name="kado" value="@kado" />
-			</p>
+            <p>
+                <label for="kado">Kado:</label>
+                <input type="text" name="kado" value="@kado" />
+            </p>
 
-			<input type="hidden" name="kadoId" value="@kadoId" />
+            <input type="hidden" name="kadoId" value="@kadoId" />
 
-			<p><input type="submit" name="buttonSubmit" value="Submit Changes" /></p>
-		</fieldset>
+            <p><input type="submit" name="buttonSubmit" value="Submit Changes" /></p>
+        </fieldset>
 	</form>
-	<p><a class="textcenter" href="~/wishlist.cshtml">Terug naar de Cadeaulijst</a></p>
+	<p class="textcenter"><a href="~/wishlist.cshtml">Terug naar de Cadeaulijst</a></p>
 </body>
 <!-- Render Footer-->
 @RenderPage("~/Shared/_Footer.cshtml")

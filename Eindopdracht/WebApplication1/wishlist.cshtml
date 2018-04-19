@@ -1,10 +1,10 @@
 ﻿@using WebMatrix.Data;
 @{
-    //checkt of je al ingelogd bent
-    if (Session["id"] == null)
-    {
-        Response.Redirect("~/register.cshtml");
-    }
+    ////checkt of je al ingelogd bent
+    //if (Session["id"] == null)
+    //{
+    //    Response.Redirect("~/register.cshtml");
+    //}
 
     /* Opent connectie met Database */
     string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\Basedata.mdf;Integrated Security=True";
@@ -12,8 +12,6 @@
     Database db = Database.OpenConnectionString(connectionString, provider);
     var selectedData = db.Query("SELECT * FROM Kado");
     var grid = new WebGrid(source: selectedData);
-
-    /*if(!Request.QueryString[E])*/
 }
 <!DOCTYPE html>
 <html lang="en">

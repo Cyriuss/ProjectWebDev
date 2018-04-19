@@ -1,3 +1,7 @@
 ﻿.footer {
-    bottom: 0;
+    position: relative;
+    margin-top: 0px; /* negative value of footer height */
+    height: 0px;
+    clear: both;
+    padding-top: 20px;
 }
